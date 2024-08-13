@@ -1,0 +1,507 @@
+{% extends 'layouts/main.html' %}
+
+{% load static %}
+
+{% block body %}
+<!-- Slick Slider CSS -->
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.css" />
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick-theme.min.css" />
+
+<!-- Slick Slider JavaScript -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/slick-carousel/1.8.1/slick.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@panzoom/panzoom@4.4.0/dist/panzoom.min.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const imgBigWrap = document.querySelector('.big-img-wrap');
+    const panzoom = Panzoom(imgBigWrap, {
+        maxScale: 4,
+        contain: 'outside'
+    });
+    imgBigWrap.addEventListener('wheel', panzoom.zoomWithWheel);
+});
+</script>
+
+<div class="res-header w-100">
+  <div class="res-topbar w-100">
+    <div class="container">
+      <div class="res-topbar-inner d-flex flex-wrap align-items-center justify-content-between">
+        <div class="logo">
+          <h1 class="mb-0">
+            <a href="index.html"><img src="{% static '/images/logo.webp' %}"></a></h1>
+        </div>
+        <ul class="shp-lst list-unstyled d-flex align-items-center justify-content-end">
+          <li class="bar">
+            <a class="responsive-menu-trigger d-inline-block" href="#" onclick="showMenu()"><i class="fi fi-rr-align-justify"></i></a>
+          </li>
+          <li><a style="font-weight: 300;" href="#"><img src="{% static '/images/resources/icon-3.png' %}" alt=""></a></li>
+          <li><a style="font-weight: 500;" href="#"><img src="{% static '/images/resources/icon-4.png' %}" alt=""></a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-nav position-relative">
+  <div class="nav-links" id="navLinks">
+    <a href="#" class="position-absolute res-menu-close" onclick="hideMenu()">
+      <i class="fa-solid fa-xmark"></i></a>
+    <ul class="mobile-res list-unstyled mb-0">
+      <li><a href="index.html">Home</a></li>
+      <li><a class="collapsed" data-bs-toggle="collapse" data-bs-target="#mb-one" aria-controls="mb-one" href="index.html">Shop <i class="fa-solid fa-angle-down"></i></a>
+        <ul class="collapse children mb-0 w-100 list-unstyled" id="mb-one">
+          <li><a href="shop-fullwidth.html">Shop Fullwidth</a></li>
+          <li><a href="shop-sidebar.html">Shop With Sidebar</a></li>
+        </ul>
+      </li>
+      <li><a class="collapsed" data-bs-toggle="collapse" data-bs-target="#mb-two" aria-controls="mb-two" href="index.html">Product <i class="fa-solid fa-angle-down"></i></a>
+        <ul id="mb-two" class="collapse children mb-0 w-100 list-unstyled">
+          <li><a href="product-detail.html">Product-Detail</a></li>
+        </ul>
+      </li>
+      <li><a class="collapsed" data-bs-toggle="collapse" data-bs-target="#mb-three" aria-controls="mb-three" href="index.html">Pages <i class="fa-solid fa-angle-down"></i></a>
+        <ul id="mb-three" class="collapse children mb-0 w-100 list-unstyled">
+          <li><a href="contact-us.html">Contact Us</a></li>
+          <li><a href="faq.html">FAQs</a></li>
+          <li><a href="about.html">About Us</a></li>
+        </ul>
+      </li>
+      <li><a class="collapsed" data-bs-toggle="collapse" data-bs-target="#mb-four" aria-controls="mb-four" href="index.html">Blog <i class="fa-solid fa-angle-down"></i></a>
+        <ul id="mb-four" class="collapse children mb-0 w-100 list-unstyled">
+          <li><a href="blog-grid.html">Blog Grid</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html">Buy Now</a></li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  var navLinks = document.getElementById("navLinks");
+  function showMenu() {
+    navLinks.style.right = "0";
+  }
+  function hideMenu() {
+    navLinks.style.right = "-322px";
+  }
+</script>
+
+
+<div class="border-top" style="opacity: .3;"></div>
+<div class="container">
+  <div class="breadcrumbs row align-items-center justify-content-between d-flex">
+    <div class="col-12">
+      <ul class="breadcrumbs_content list-unstyled d-flex justify-content-center">
+        <li class="home">
+          <a title="Home" href="/" itemprop="url">
+            <span>Home</span>
+          </a>
+        </li>
+        <li>
+          <span><i class="fa-solid fa-angle-right"></i> Product-Detail</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="border-top mb-2" style="opacity: .3;"></div>
+
+<section>
+  <div class="w-100 pt-4 position-relative">
+    <div class="container">
+      <div class="product-detail position-relative w-100">
+        <div class="row">
+          <div class="col-md-12 col-sm-12 col-lg-6">
+            <div class="product-detail-imgs position-relative w-100">
+              <div class="big-img-wrap mainImage">
+                <center><img src="{{ single_product.images.url }}" alt="{{ single_product.product_name }}"></center>
+              </div>
+            </div>
+            <ul class="thumb">
+              <li>
+                <a href="{{ single_product.images.url }}" target="mainImage"><img src="{{ single_product.images.url }}" alt="Product Image"></a>
+                {% for image in product_gallery %}
+                  <a href="{{ image.image.url }}" target="mainImage"><img src="{{ image.image.url }}" alt="Product Image"></a>
+                {% endfor %}
+              </li>
+            </ul>
+          </div>
+          
+          <div class="col-md-12 col-sm-12 col-lg-6">
+            <div class="product-detail-info position-relative w-100">
+              <p>Rating: {{ single_product.averageReview }}</p>
+              <div class="rating-star">
+                <span>
+                  <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
+                  <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
+                </span>
+              </div>
+
+              <h2 class="mb-0">{{ single_product.product_name }}</h2>
+              <p class="mb-2"><strong>Brand:</strong> {{ single_product.brand }}</p>
+              {% if single_product.original_price and single_product.original_price > single_product.price %}
+              <span class="d-block price">
+                <span class="original-price" style="text-decoration: line-through;">₹ {{ single_product.original_price }}</span>
+                <span class="discounted-price">₹ {{ single_product.price }}</span>
+                {% if single_product.offer_percentage or single_product.category.offer_percentage %}
+                  {% with product_offer=single_product.offer_percentage|default_if_none:0 %}
+                    {% with category_offer=single_product.category.offer_percentage|default_if_none:0 %}
+                      {% if product_offer > category_offer %}
+                        <span class="offer-percentage" style="color: green; font-size: 16px;">( {{ product_offer }}% off)</span>
+                      {% else %}
+                        <span class="offer-percentage" style="color: green; font-size: 16px;">( {{ category_offer }}% off)</span>
+                      {% endif %}
+                    {% endwith %}
+                  {% endwith %}
+                {% endif %}
+              </span>
+              {% else %}
+                <span class="d-block price">₹ {{ single_product.price }}</span>
+              {% endif %}
+
+              <br>
+              <h6>Stock: {{ single_product.stock }}</h6>
+
+              <ul class="product-stock-info list-unstyled mb-0">
+                {% if single_product.stock <= 0 %}
+                  <li>Out of stock</li>
+                {% else %}
+                  <li>In stock</li>
+                  <li>Free delivery available</li>
+                {% endif %}
+              </ul>
+
+              <p class="mb-0">{{ single_product.description }}</p>
+              <br>
+
+              {% if single_product.stock <= 0 %}
+                <h5>Out of Stock</h5>
+              {% else %}
+                {% if in_cart %}
+                  <a href="#" class="btn btn-success" type="submit">Added to Cart <i class="fas fa-check"></i></a>
+                  <a href="{% url 'cart' %}" class="btn btn-dark" type="submit">View Cart <i class="fas fa-eye"></i></a>
+                {% else %}
+                  <div class="product-bottom d-flex flex-wrap align-items-center w-100">
+                    <div class="product-quanty">
+                      <div class="input-group bootstrap-touchspin bootstrap-touchspin-injected">
+                        <!-- Quantity input, if needed -->
+                      </div>
+                    </div>
+                    <a href="{% url 'add_cart' single_product.id %}" class="btn btn-dark" type="submit">Add to Cart</a>
+                  </div>
+                {% endif %}
+              {% endif %}
+
+              <div class="wish my-4">
+                <a class="heart-btn d-inline-block rounded-circle" href="{% url 'add_to_wishlist' single_product.id %}" title=""><i class="fi-rr-heart"></i>Add to Wishlist</a>
+              </div>
+              <div class="safe-check">
+                <img src="{% static 'images/resources/safe.png' %}" alt="Safe Checkout">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<style>
+  /* Zoom effect on hover */
+  .big-img-container {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .big-img-container:hover .big-img {
+    transform: scale(1.2); /* Adjust the scale factor as needed */
+    transition: transform 0.3s ease; /* Smooth transition */
+  }
+
+  .big-img {
+    display: block;
+    width: 100%;
+    transition: transform 0.3s ease;
+  }
+</style>
+
+
+<section>
+  <div class="w-100 img-set" style="margin-top:60px;">
+      <div class="container">
+          <div class="row">
+              <div class="sec-tl text-center">
+                  <h1>RELATED PRODUCTS</h1>
+              </div>
+          </div>
+    <div class="row">
+        {% for product in  related_products %} 
+        
+        <div class="col-lg-3 col-md-6 col-sm-12">
+            <div class="block-product">
+                <div class="product-thumb position-relative">
+                    <a href="#"><img src="{{ product.images.url }}"></a>
+                    <a href="{{product.get_url}}" class="ad-cart position-absolute text-center">
+                        <span>View Details</span>
+                    </a>
+                    <div class="product-btns position-absolute">
+                      <a class="wishlist-btn" href="wishlist.html" style="transition-delay:0ms;">
+                          <i class="fi fi-rr-heart"></i>
+                      </a>
+                      <a class="cart-btn" href="cart.html" style="transition-delay: 45ms;">
+                          <i class="fi-rr-shopping-bag"></i>
+                      </a>
+                      <a class="expand-btn" href="{% url 'product_detail' category_slug=product.category.slug product_slug=product.slug %}" style="transition-delay:90ms;">
+                          <i class="fi fi-rr-picture"></i>
+                      </a>
+
+      <!--product-btns--></div>
+                </div>
+                <div class="product-body text-center">
+                    <a href="#" class="brand-name">{{ product.product_name }}</a>
+                    <h2 class="product-name">
+                      <a href="#">{{ product.product_name }}</a></h2>
+                      <span class="product-price">₹ {{ product.price }}</span>
+                      
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+</section>
+
+
+
+<section style="margin-top:70px;margin-bottom:40px;">
+<div class="w-100 position-relative bg-color5 pt-70 pb-120">
+<div class="container">
+
+ <div class="product-tabs position-relative w-100">
+
+
+  <ul class="nav nav-tabs justify-content-center" id="myTab" role="tablist">
+  <li class="nav-item" role="presentation">
+    <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Description</button>
+  </li>
+  
+  <li class="nav-item" role="presentation">
+    <button class="nav-link" id="contact-tab" data-bs-toggle="tab" data-bs-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Reviews</button>
+  </li>
+</ul>
+<div class="tab-content" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+
+  <div class="product-detail-tab-content w-100">
+
+      <h4 class="mb-0">Product Information</h4>
+      <p class="mb-0">{{single_product.description}}.</p>
+      
+  <!--content--></div>
+</div>
+  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+</div>
+  <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">
+
+ <div class="product-detail-tab-content w-100">
+  <form action="{% url 'submit_review' single_product.id %}" method="POST">
+    {% csrf_token %}
+    <h5>Write Your Review</h5>
+    <br>
+    <div>
+      <!-- rating starts -->
+      <label>How do you rate this product?</label>
+      <br>
+      <div class="rate">
+        <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
+        <input type="radio" name="rating" id="rating9" value="4.5" required /><label for="rating9" title="4.5" class="half"></label>
+        <input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8" title="4"></label>
+        <input type="radio" name="rating" id="rating7" value="3.5" required /><label for="rating7" title="3.5" class="half"></label>
+        <input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6" title="3"></label>
+        <input type="radio" name="rating" id="rating5" value="2.5" required /><label for="rating5" title="2.5" class="half"></label>
+        <input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4" title="2" ></label>
+        <input type="radio" name="rating" id="rating3" value="1.5" required /><label for="rating3" title="1.5" class="half"></label>
+        <input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
+        <input type="radio" name="rating" id="rating1" value="0.5" required /><label for="rating1" title="0.5" class="half"></label>
+      </div>
+<br>
+      Review Title:
+      <input type="text" class="form-control"  name="subject" style="background-color: rgb(248, 248, 248);" >
+     
+      Review:
+      <textarea name="review" rows="4" class="form-control" style="height: 110px"></textarea>
+      <br>
+      {% if user.is_authenticated %}
+      <input type="submit" value="Submit Review" class="btn btn-primary">
+      {% else %}
+      <p>You must be logged in to post review. <a href="{% url 'home' %}"><span>Login Now</span></a></p>
+      {% endif %}
+    </div>
+    <br>
+    {% if messages %}
+    <div class="messages">
+        {% for message in messages %}
+        <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+            {{ message }}
+        </div>
+        {% endfor %}
+    </div>
+    {% endif %}
+  </form>
+ 
+  <br> <h3>Customer Reviews :)  </h3>
+  <!-- <div class="rating-star">
+    <span>
+      <i class="fa fa-star{% if single_product.averageReview < 0.5 %}-o{% elif single_product.averageReview >= 0.5 and single_product.averageReview < 1 %}-half-o{% endif %}" aria-hidden="true"></i>
+      <i class="fa fa-star{% if single_product.averageReview < 1.5 %}-o{% elif single_product.averageReview >= 1.5 and single_product.averageReview < 2 %}-half-o{% endif %}" aria-hidden="true"></i>
+      <i class="fa fa-star{% if single_product.averageReview < 2.5 %}-o{% elif single_product.averageReview >= 2.5 and single_product.averageReview < 3 %}-half-o{% endif %}" aria-hidden="true"></i>
+      <i class="fa fa-star{% if single_product.averageReview < 3.5 %}-o{% elif single_product.averageReview >= 3.5 and single_product.averageReview < 4 %}-half-o{% endif %}" aria-hidden="true"></i>
+      <i class="fa fa-star{% if single_product.averageReview < 4.5 %}-o{% elif single_product.averageReview >= 4.5 and single_product.averageReview < 5 %}-half-o{% endif %}" aria-hidden="true"></i>
+    </span> 
+  </div> -->
+
+{% for review in reviews %}
+<div class="review-card">
+  <div class="review-header">
+      <div class="review-user">   
+        <i class="fa fa-user" aria-hidden="true"></i> &nbsp;
+          <span class="user-name"> {{ review.user.username}}</span>
+      </div>
+      <span class="user-name">{{ review.subject}}</span>
+  </div>
+
+  <div class="rating-star">
+    <span>
+      <i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o{% endif %}" aria-hidden="true"></i>
+      <i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o{% endif %}" aria-hidden="true"></i>
+      <i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o{% endif %}" aria-hidden="true"></i>
+      <i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o{% endif %}" aria-hidden="true"></i>
+      <i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o{% endif %}" aria-hidden="true"></i>
+    </span>
+  </div>
+    
+    <h6>"{{ review.review }}"</h6>
+  
+  <div class="review-footer">
+      <span class="review-date">{{ review.updated_at|date:"F j, Y" }}</span>
+  </div>
+</div>
+ {% endfor %}
+<style>
+  .review-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 16px;
+    margin: 16px 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.review-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.review-user {
+    display: flex;
+    align-items: center;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.user-name {
+    font-weight: bold;
+    font-size: 1.1em;
+}
+
+.review-rating {
+    display: flex;
+}
+
+.star {
+    color: #FFD700; /* Gold color */
+    margin-left: 2px;
+}
+
+.star.empty {
+    color: #ddd;
+}
+
+.review-body {
+    margin-bottom: 8px;
+}
+
+.review-footer {
+    text-align: right;
+    font-size: 0.9em;
+    color: #888;
+}
+/* Mini Image Slider Styles */
+.mini-image-slider {
+  display: flex;
+  overflow-x: auto;
+  margin-bottom: 20px;
+}
+
+.mini-image-slider img {
+  height: 80px; /* Adjust height as needed */
+  object-fit: cover;
+  margin-right: 10px; /* Space between images */
+  cursor: pointer;
+  transition: transform 0.3s ease;
+}
+
+.mini-image-slider img:hover {
+  transform: scale(1.1); /* Zoom effect on hover */
+}
+
+/* Big Image Slider Styles */
+.product-slider {
+  position: relative;
+}
+
+.big-img-container {
+  width: 100%;
+  height: auto;
+}
+
+.big-img {
+  width: 100%;
+  height: auto;
+}
+
+
+</style>
+  <header class="section-heading">
+   
+
+  </header>
+
+ </div>
+ 
+</div>
+
+ <!--porduct-tabs--></div>
+
+<!--container--></div>
+<!--w-100--></div>
+
+</section>
+
+{% endblock body %}
+
+

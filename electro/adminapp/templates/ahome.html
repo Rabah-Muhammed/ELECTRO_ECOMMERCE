@@ -1,0 +1,598 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+  <head> 
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Electro Admin </title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="all,follow">
+    <link rel="icon" href=
+    "https://media.geeksforgeeks.org/wp-content/cdn-uploads/gfg_200X200.png" 
+              type="image/x-icon">
+    <!-- Bootstrap CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}">
+    <!-- Font Awesome CSS-->
+    <link rel="stylesheet" href="{% static 'vendor/font-awesome/css/font-awesome.min.css' %}">
+    <!-- Custom Font Icons CSS-->
+    <link rel="stylesheet" href="{% static 'css/font.css' %}">
+    <!-- Google fonts - Muli-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Muli:300,400,700">
+    <!-- theme stylesheet-->
+    <link rel="stylesheet" href="{% static 'css/style.default.css' %}" id="theme-stylesheet">
+    <!-- Custom stylesheet - for your changes-->
+    <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{% static 'img/favicon.ico' %}">
+
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Tweaks for older IEs--><!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script><![endif]-->
+  </head>
+  <body>
+    <style>
+          h1, h2, i,ul , p{
+              color: white;
+          }
+    </style>
+    <header class="header">   
+      <nav class="navbar navbar-expand-lg">
+        <div class="search-panel">
+          <div class="search-inner d-flex align-items-center justify-content-center">
+            <div class="close-btn">Close <i class="fa fa-close"></i></div>
+            <form id="searchForm" action="#">
+              <div class="form-group">
+                <input type="search" name="search" placeholder="What are you searching for...">
+                <button type="submit" class="submit">Search</button>
+              </div>
+            </form>
+          </div>
+        </div>
+        <div class="container-fluid d-flex align-items-center justify-content-between">
+          <div class="navbar-header">
+            <!-- Navbar Header--><a href="index.html" class="navbar-brand">
+              <div class="brand-text brand-big visible text-uppercase"><strong class="text-primary">Dark</strong><strong>Admin</strong></div>
+              <div class="brand-text brand-sm"><strong class="text-primary">D</strong><strong>A</strong></div></a>
+            <!-- Sidebar Toggle Btn-->
+            <button class="sidebar-toggle"><i class="fa fa-long-arrow-left"></i></button>
+          </div>
+          <div class="right-menu list-inline no-margin-bottom">    
+            <div class="list-inline-item"><a href="#" class="search-open nav-link"><i class="icon-magnifying-glass-browser"></i></a></div>
+            <div class="list-inline-item dropdown"><a id="navbarDropdownMenuLink1" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link messages-toggle"><i class="icon-email"></i><span class="badge dashbg-1">5</span></a>
+              <div aria-labelledby="navbarDropdownMenuLink1" class="dropdown-menu messages"><a href="#" class="dropdown-item message d-flex align-items-center">
+                  <div class="profile"><img src="img/avatar-3.jpg" alt="..." class="img-fluid">
+                    <div class="status online"></div>
+                  </div>
+                  <div class="content">   <strong class="d-block">Nadia Halsey</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">9:30am</small></div></a><a href="#" class="dropdown-item message d-flex align-items-center">
+                  <div class="profile"><img src="{% static 'img/avatar-2.jpg' %}" alt="..." class="img-fluid">
+                    <div class="status away"></div>
+                  </div>
+                  <div class="content">   <strong class="d-block">Peter Ramsy</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">7:40am</small></div></a><a href="#" class="dropdown-item message d-flex align-items-center">
+                  <div class="profile"><img src="{% static 'img/avatar-1.jpg' %}" alt="..." class="img-fluid">
+                    <div class="status busy"></div>
+                  </div>
+                  <div class="content">   <strong class="d-block">Sam Kaheil</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">6:55am</small></div></a><a href="#" class="dropdown-item message d-flex align-items-center">
+                  <div class="profile"><img src="{% static 'img/avatar-5.jpg' %}" alt="..." class="img-fluid">
+                    <div class="status offline"></div>
+                  </div >
+                  <div class="content">   <strong class="d-block">Sara Wood</strong><span class="d-block">lorem ipsum dolor sit amit</span><small class="date d-block">10:30pm</small></div></a><a href="#" class="dropdown-item text-center message"> <strong>See All Messages <i class="fa fa-angle-right"></i></strong></a></div>
+            </div>
+            <!-- Tasks-->
+            <div class="list-inline-item dropdown"><a id="navbarDropdownMenuLink2" href="http://example.com" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" class="nav-link tasks-toggle"><i class="icon-new-file"></i><span class="badge dashbg-3">9</span></a>
+              <div aria-labelledby="navbarDropdownMenuLink2" class="dropdown-menu tasks-list"><a href="#" class="dropdown-item">
+                  <div class="text d-flex justify-content-between"><strong>Task 1</strong><span>40% complete</span></div>
+                  <div class="progress">
+                    <div role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                  </div></a><a href="#" class="dropdown-item">
+                  <div class="text d-flex justify-content-between"><strong>Task 2</strong><span>20% complete</span></div>
+                  <div class="progress">
+                    <div role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-3"></div>
+                  </div></a><a href="#" class="dropdown-item">
+                  <div class="text d-flex justify-content-between"><strong>Task 3</strong><span>70% complete</span></div>
+                  <div class="progress">
+                    <div role="progressbar" style="width: 70%" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-2"></div>
+                  </div></a><a href="#" class="dropdown-item">
+                  <div class="text d-flex justify-content-between"><strong>Task 4</strong><span>30% complete</span></div>
+                  <div class="progress">
+                    <div role="progressbar" style="width: 30%" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-4"></div>
+                  </div></a><a href="#" class="dropdown-item">
+                  <div class="text d-flex justify-content-between"><strong>Task 5</strong><span>65% complete</span></div>
+                  <div class="progress">
+                    <div role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" class="progress-bar dashbg-1"></div>
+                  </div></a><a href="#" class="dropdown-item text-center"> <strong>See All Tasks <i class="fa fa-angle-right"></i></strong></a>
+              </div>
+            </div>
+            <!-- Tasks end-->
+            <!-- Megamenu-->
+            <div class="list-inline-item dropdown menu-large"><a href="#" data-toggle="dropdown" class="nav-link">Dropdown <i class="fa fa-ellipsis-v"></i></a>
+              <div class="dropdown-menu megamenu">
+                <div class="row">
+                  <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements Heading</strong>
+                    <ul class="list-unstyled mb-3">
+                      <li><a href="#">Lorem ipsum dolor</a></li>
+                      <li><a href="#">Sed ut perspiciatis</a></li>
+                      <li><a href="#">Voluptatum deleniti</a></li>
+                      <li><a href="#">At vero eos</a></li>
+                      <li><a href="#">Consectetur adipiscing</a></li>
+                      <li><a href="#">Duis aute irure</a></li>
+                      <li><a href="#">Necessitatibus saepe</a></li>
+                      <li><a href="#">Maiores alias</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements Heading</strong>
+                    <ul class="list-unstyled mb-3">
+                      <li><a href="#">Lorem ipsum dolor</a></li>
+                      <li><a href="#">Sed ut perspiciatis</a></li>
+                      <li><a href="#">Voluptatum deleniti</a></li>
+                      <li><a href="#">At vero eos</a></li>
+                      <li><a href="#">Consectetur adipiscing</a></li>
+                      <li><a href="#">Duis aute irure</a></li>
+                      <li><a href="#">Necessitatibus saepe</a></li>
+                      <li><a href="#">Maiores alias</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements Heading</strong>
+                    <ul class="list-unstyled mb-3">
+                      <li><a href="#">Lorem ipsum dolor</a></li>
+                      <li><a href="#">Sed ut perspiciatis</a></li>
+                      <li><a href="#">Voluptatum deleniti</a></li>
+                      <li><a href="#">At vero eos</a></li>
+                      <li><a href="#">Consectetur adipiscing</a></li>
+                      <li><a href="#">Duis aute irure</a></li>
+                      <li><a href="#">Necessitatibus saepe</a></li>
+                      <li><a href="#">Maiores alias</a></li>
+                    </ul>
+                  </div>
+                  <div class="col-lg-3 col-md-6"><strong class="text-uppercase">Elements Heading</strong>
+                    <ul class="list-unstyled mb-3">
+                      <li><a href="#">Lorem ipsum dolor</a></li>
+                      <li><a href="#">Sed ut perspiciatis</a></li>
+                      <li><a href="#">Voluptatum deleniti</a></li>
+                      <li><a href="#">At vero eos</a></li>
+                      <li><a href="#">Consectetur adipiscing</a></li>
+                      <li><a href="#">Duis aute irure</a></li>
+                      <li><a href="#">Necessitatibus saepe</a></li>
+                      <li><a href="#">Maiores alias</a></li>
+                    </ul>
+                  </div>
+                </div>
+                <div class="row megamenu-buttons text-center">
+                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link dashbg-1"><i class="fa fa-clock-o"></i><strong>Demo 1</strong></a></div>
+                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link dashbg-2"><i class="fa fa-clock-o"></i><strong>Demo 2</strong></a></div>
+                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link dashbg-3"><i class="fa fa-clock-o"></i><strong>Demo 3</strong></a></div>
+                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link dashbg-4"><i class="fa fa-clock-o"></i><strong>Demo 4</strong></a></div>
+                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link bg-danger"><i class="fa fa-clock-o"></i><strong>Demo 5</strong></a></div>
+                  <div class="col-lg-2 col-md-4"><a href="#" class="d-block megamenu-button-link bg-info"><i class="fa fa-clock-o"></i><strong>Demo 6</strong></a></div>
+                </div>
+              </div>
+            </div>
+            <!-- Megamenu end     -->
+            <!-- Languages dropdown    -->
+            
+            <!-- Log out               -->
+            <div class="list-inline-item logout">                   <a id="logout" href="{%  url 'alogin' %}" class="nav-link">Logout <i class="icon-logout"></i></a></div>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <div class="d-flex align-items-stretch">
+      <!-- Sidebar Navigation-->
+      <nav id="sidebar">
+        <!-- Sidebar Header-->
+        <div class="sidebar-header d-flex align-items-center">
+          <div class="avatar"><img src="{% static 'images/resources/mbr-5.jpg' %}" alt="..." class="img-fluid rounded-circle"></div>
+          <div class="title">
+            <h1 class="h5">Muhammed Rabah</h1>
+            <p>Web Designer</p>
+          </div>
+        </div>
+        <!-- Sidebar Navidation Menus--><span class="heading">Main</span>
+        <ul class="list-unstyled">
+                <li class="{% if request.path == '/' %}active{% endif %}"><a href="{% url 'ahome' %}"> <i class="icon-home"></i>Home </a></li>
+                <li class="{% if request.path == '/userlist/' %}active{% endif %}" ><a href="{% url 'userlist' %}"> <i class="icon-grid"></i>Users List </a></li>
+                <li class="{% if request.path == '/categorylist/' %}active{% endif %}" ><a href="{% url 'categorylist' %}"> <i class="fa fa-bar-chart"></i>Categories List </a></li>
+                <li class="{% if request.path == '/productlist/' %}active{% endif %}" ><a href="{% url 'productlist' %}"> <i class="icon-padnote"></i>Product List </a></li>
+                <li class="{% if request.path == '/manage_orders/' %}active{% endif %}" ><a href="{% url 'manage_orders' %}"> <i class="icon-padnote"></i>Orders List </a></li>
+                <li class="{% if request.path == '/manage_coupons/' %}active{% endif %}" ><a href="{% url 'manage_coupons' %}"> <i class="icon-padnote"></i>Coupons</a></li>
+                <li class="{% if request.path == '/sales_report/' %}active{% endif %}" ><a href="{% url 'sales_report' %}"> <i class="icon-padnote"></i>Sales Report </a></li>
+                <li class="{% if request.path == '/top_selling/' %}active{% endif %}" ><a href="{% url 'top_selling' %}"> <i class="icon-padnote"></i>Top selling </a></li>
+                <li class="{% if request.path == '/brand_list/' %}active{% endif %}" ><a href="{% url 'brand_list' %}"> <i class="icon-padnote"></i>Add Brands </a></li>
+                <li><a href="#exampledropdownDropdown" aria-expanded="false" data-toggle="collapse"> <i class="icon-windows"></i>Example dropdown </a>
+                  <ul id="exampledropdownDropdown" class="collapse list-unstyled ">
+                    <li><a href="#">Page</a></li>
+                    <li><a href="#">Page</a></li>
+                    <li><a href="#">Page</a></li>
+                  </ul>
+                </li>
+                <li><a href="{% url 'alogout' %}"> <i class="icon-logout"></i>Login page </a></li>
+    
+      </nav>
+      <!-- Sidebar Navigation end-->
+      {% block body %}
+      <style>
+          body {
+              font-family: Arial, sans-serif;
+              line-height: 1.6;
+              margin: 20px;
+              background-color: #2d3035;
+              color: white;
+          }
+      
+          .container {
+              padding: 20px;
+          }
+      
+          .filter {
+              margin-bottom: 20px;
+          }
+      
+          .filter label {
+              color: white;
+              margin-right: 10px;
+          }
+      
+          .filter select,
+          .filter input[type="date"] {
+              background-color: #343a40;
+              color: white;
+              border: 1px solid #ffffff;
+              padding: 5px;
+              border-radius: 5px;
+              margin-right: 10px;
+          }
+      
+          .filter button {
+              background-color: #007bff;
+              color: white;
+              border: none;
+              padding: 5px 10px;
+              border-radius: 5px;
+              cursor: pointer;
+          }
+      
+          .filter button:hover {
+              background-color: #0056b3;
+          }
+      
+          .charts {
+              margin-bottom: 20px;
+          }
+      
+          .chart-container {
+              margin-bottom: 20px;
+              position: relative;
+              height: 400px;
+          }
+      
+          .chart-row {
+              display: flex;
+              justify-content: space-between;
+          }
+      
+          .chart-half {
+              flex: 1;
+              margin-right: 10px;
+          }
+      
+          .chart-half:last-child {
+              margin-right: 0;
+          }
+      
+          .summary {
+              margin-top: 20px;
+              padding: 20px;
+              background-color: #343a40;
+              border-radius: 5px;
+          }
+      
+          .summary p {
+              margin: 10px 0;
+          }
+      
+          .summary h2 {
+              margin-bottom: 20px;
+          }
+      </style>
+      
+      <div class="container">
+          <h3>Admin Dashboard</h3>
+          <br>
+          <!-- Report Type Filter -->
+          <div class="filter">
+              <label for="report-type">Select Report Type:</label>
+              <select id="report-type" name="report_type">
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+              </select>
+      
+              <!-- Date Range Filter -->
+              <label for="start_date">Start Date:</label>
+              <input type="date" id="start_date" name="start_date">
+      
+              <label for="end_date">End Date:</label>
+              <input type="date" id="end_date" name="end_date">
+      
+              <button id="apply-filters">Apply Filters</button>
+          </div>
+      
+          <!-- Charts Section -->
+          <div class="charts">
+              <!-- Row for Total Orders and Most Sold Categories Charts -->
+              <div class="chart-row">
+                  <!-- Total Orders Chart -->
+                  <div class="chart-half">
+                      <div class="chart-container">
+                          <canvas id="ordersChart"></canvas>
+                      </div>
+                  </div>
+                  <!-- Most Sold Categories Chart -->
+                  <div class="chart-half">
+                      <div class="chart-container">
+                          <canvas id="categoryChart"></canvas>
+                      </div>
+                  </div>
+              </div>
+      
+              <!-- Sales Chart -->
+              <div class="chart-container">
+                  <canvas id="salesChart"></canvas>
+              </div>
+          </div>
+      
+          <!-- Ledger Book -->
+          <br>
+          <h4>Generate Ledger Book</h4>
+          <form method="get" action="{% url 'ledger_book' %}">
+              <label for="ledger_start_date">Start Date:</label>
+              <input type="date" id="ledger_start_date" name="start_date" required>
+      
+              <label for="ledger_end_date">End Date:</label>
+              <input type="date" id="ledger_end_date" name="end_date" required>
+      
+              <button type="submit">Generate Ledger Book</button>
+          </form>
+      </div>
+      
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+      <script>
+          let ordersChart, categoryChart, salesChart; // Declare chart variables globally
+      
+          function initializeCharts(data) {
+              const ctxOrders = document.getElementById('ordersChart').getContext('2d');
+              ordersChart = new Chart(ctxOrders, {
+                  type: 'bar',
+                  data: {
+                      labels: data.orders_labels,
+                      datasets: [{
+                          label: 'Total Orders',
+                          data: data.orders_data,
+                          backgroundColor: 'rgba(153, 102, 255, 0.3)',
+                          borderColor: 'rgba(153, 102, 255, 1)',
+                          borderWidth: 2,
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      scales: {
+                          x: {
+                              beginAtZero: true,
+                              title: {
+                                  display: true,
+                                  text: 'Date',
+                                  color: '#ffffff'
+                              },
+                              grid: {
+                                  color: 'rgba(255, 255, 255, 0.1)'
+                              }
+                          },
+                          y: {
+                              beginAtZero: true,
+                              title: {
+                                  display: true,
+                                  text: 'Orders',
+                                  color: '#ffffff'
+                              },
+                              grid: {
+                                  color: 'rgba(255, 255, 255, 0.1)'
+                              }
+                          }
+                      },
+                      plugins: {
+                          legend: {
+                              labels: {
+                                  color: '#ffffff'
+                              }
+                          },
+                          tooltip: {
+                              backgroundColor: '#333333'
+                          }
+                      }
+                  }
+              });
+      
+              const ctxCategory = document.getElementById('categoryChart').getContext('2d');
+              categoryChart = new Chart(ctxCategory, {
+                  type: 'pie',
+                  data: {
+                      labels: data.category_labels,
+                      datasets: [{
+                          label: 'Most Sold Categories',
+                          data: data.category_data,
+                          backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                          borderWidth: 1
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      plugins: {
+                          legend: {
+                              labels: {
+                                  color: '#ffffff'
+                              }
+                          }
+                      }
+                  }
+              });
+      
+              const ctxSales = document.getElementById('salesChart').getContext('2d');
+              salesChart = new Chart(ctxSales, {
+                  type: 'line',
+                  data: {
+                      labels: data.sales_labels,
+                      datasets: [{
+                          label: 'Total Sales',
+                          data: data.sales_data,
+                          backgroundColor: 'rgba(75, 192, 192, 0.3)',
+                          borderColor: 'rgba(75, 192, 192, 1)',
+                          borderWidth: 2,
+                          pointBackgroundColor: 'rgba(75, 192, 192, 1)',
+                          pointRadius: 5
+                      }]
+                  },
+                  options: {
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      scales: {
+                          x: {
+                              beginAtZero: true,
+                              title: {
+                                  display: true,
+                                  text: 'Date',
+                                  color: '#ffffff'
+                              },
+                              grid: {
+                                  color: 'rgba(255, 255, 255, 0.1)'
+                              }
+                          },
+                          y: {
+                              beginAtZero: true,
+                              title: {
+                                  display: true,
+                                  text: 'Amount',
+                                  color: '#ffffff'
+                              },
+                              grid: {
+                                  color: 'rgba(255, 255, 255, 0.1)'
+                              }
+                          }
+                      },
+                      plugins: {
+                          legend: {
+                              labels: {
+                                  color: '#ffffff'
+                              }
+                          },
+                          tooltip: {
+                              backgroundColor: '#333333'
+                          }
+                      }
+                  }
+              });
+          }
+      
+          function updateCharts(data) {
+              if (ordersChart) {
+                  ordersChart.data.labels = data.orders_labels;
+                  ordersChart.data.datasets[0].data = data.orders_data;
+                  ordersChart.update();
+              }
+              if (categoryChart) {
+                  categoryChart.data.labels = data.category_labels;
+                  categoryChart.data.datasets[0].data = data.category_data;
+                  categoryChart.update();
+              }
+              if (salesChart) {
+                  salesChart.data.labels = data.sales_labels;
+                  salesChart.data.datasets[0].data = data.sales_data;
+                  salesChart.update();
+              }
+          }
+      
+          document.addEventListener('DOMContentLoaded', function() {
+    fetchChartsData();
+
+    document.getElementById('apply-filters').addEventListener('click', function() {
+        fetchChartsData();
+    });
+
+    function fetchChartsData() {
+        const reportType = document.getElementById('report-type').value;
+        const startDate = document.getElementById('start_date').value;
+        const endDate = document.getElementById('end_date').value;
+
+        console.log(`Fetching data for reportType=${reportType}, startDate=${startDate}, endDate=${endDate}`); // Debug logging
+
+        fetch(`/admin_dashboard/?report_type=${reportType}&start_date=${startDate}&end_date=${endDate}`, {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (ordersChart && categoryChart && salesChart) {
+                updateCharts(data);
+            } else {
+                initializeCharts(data);
+            }
+        })
+        .catch(error => console.error('Error fetching data:', error)); // Error handling
+    }
+
+    // Initialize date pickers with available dates
+    function updateDatePickers() {
+        fetch('/api/get_available_order_dates/')
+            .then(response => response.json())
+            .then(data => {
+                const { min_date, max_date } = data;
+
+                const startDatePicker = document.getElementById('start_date');
+                const endDatePicker = document.getElementById('end_date');
+                
+                // Set min and max values for the date pickers
+                startDatePicker.min = min_date;
+                startDatePicker.max = max_date;
+                endDatePicker.min = min_date;
+                endDatePicker.max = max_date;
+
+                // Ensure end date is not before start date
+                startDatePicker.addEventListener('change', function() {
+                    endDatePicker.min = this.value;
+                    if (new Date(endDatePicker.value) < new Date(this.value)) {
+                        endDatePicker.value = this.value;
+                    }
+                });
+
+                endDatePicker.addEventListener('change', function() {
+                    if (new Date(this.value) < new Date(startDatePicker.value)) {
+                        this.value = startDatePicker.value;
+                    }
+                });
+            })
+            .catch(error => console.error('Error fetching available dates:', error));
+    }
+
+    updateDatePickers();
+});
+
+      </script>
+      
+      
+      {% endblock %}
+      
+      
+    </div>
+    <!-- JavaScript files-->
+    <script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+    <script src="{% static 'vendor/popper.js/umd/popper.min.js' %}"> </script>
+    <script src="{% static 'vendor/bootstrap/js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery.cookie/jquery.cookie.js' %}"> </script>
+    <script src="{% static 'vendor/chart.js/Chart.min.js' %}"></script>
+    <script src="{% static 'vendor/jquery-validation/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'js/charts-home.js' %}"></script>
+    <script src="{% static 'js/front.js' %}"></script>
+
+  </body>
+</html>

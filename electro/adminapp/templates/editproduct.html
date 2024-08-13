@@ -1,0 +1,434 @@
+{% extends 'ahome.html' %}
+
+{% load static %}
+
+{% block body %}
+<style>
+    /* Custom styles for edit product form */
+    body {
+        font-family: Arial, sans-serif;
+        line-height: 1.6;
+        margin: 20px;
+        background-color: #2d3035;
+        color: white;
+    }
+
+    .page-content {
+        padding: 20px;
+        position: relative;
+    }
+
+    .form-container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #343a40;
+        padding: 20px;
+        border-radius: 5px;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 5px;
+    }
+
+    input[type="text"], input[type="number"], textarea, input[type="file"], select {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        background-color: #fff;
+        color: #495057;
+    }
+
+    .btn {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        outline: none;
+        border: none;
+        border-radius: 3px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        color: #fff;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .error {
+        color: #dc3545;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    .image-preview {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin-top: 10px;
+    }
+
+    .image-preview div {
+        display: flex;
+        align-items: center;
+    }
+
+    .image-preview img {
+        max-width: 100px;
+        max-height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        margin-right: 10px;
+    }
+
+    .image-preview a {
+        color: #007bff;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .image-preview a:hover {
+        text-decoration: underline;
+    }
+
+    .image-path {
+        font-size: 14px;
+        color: #f8f9fa;
+    }
+
+    .main-image-preview {
+        margin-top: 10px;
+    }
+
+    .main-image-preview img {
+        max-width: 200px;
+        max-height: 200px;
+    }
+
+    #cropperContainer {
+        display: none;
+        position: relative;
+    }
+
+    #cropperImage {
+        max-width: 100%;
+    }
+</style>
+
+<!-- Include Cropper.js CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+
+<!-- Include Cropper.js JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <h2 class="h5 no-margin-bottom">Edit Product</h2>
+        </div>
+    </div>
+
+    <div class="form-container">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.non_field_errors }}
+
+            <!-- Product Name Field -->
+            <div class="form-group">
+                <label for="id_product_name">Product Name</label>
+                {{ form.product_name }}
+                {% if form.product_name.errors %}
+                    <p class="error">{{ form.product_name.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Slug Field -->
+            <div class="form-group">
+                <label for="id_slug">Slug</label>
+                {{ form.slug }}
+                {% if form.slug.errors %}
+                    <p class="error">{{ form.slug.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Price Field -->
+            <div class="form-group">
+                <label for="id_price">Price</label>
+                {{ form.price }}
+                {% if form.price.errors %}
+                    <p class="error">{{ form.price.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Stock Field -->
+            <div class="form-group">
+                <label for="id_stock">Stock</label>
+                {{ form.stock }}
+                {% if form.stock.errors %}
+                    <p class="error">{{ form.stock.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Description Field -->
+            <div class="form-group">
+                <label for="id_description">Description</label>
+                {{ form.description }}
+                {% if form.description.errors %}
+                    <p class="error">{{ form.description.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Category Field -->
+            <div class="form-group">
+                <label for="id_category">Category</label>
+                {{ form.category }}
+                {% if form.category.errors %}
+                    <p class="error">{{ form.category.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Brand Field -->
+            <div class="form-group">
+                <label for="id_brand">Brand</label>
+                {{ form.brand }}
+                {% if form.brand.errors %}
+                    <p class="error">{{ form.brand.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Main Image Field -->
+            <div class="form-group">
+                <label for="id_images">Main Image</label>
+                <input type="file" name="images" id="id_images">
+                <div class="main-image-preview" id="mainImagePreview">
+                    <!-- Existing main image preview -->
+                    {% if product.images %}
+                        <img src="{{ product.images.url }}" alt="Current Main Image">
+                    {% endif %}
+                    <!-- Container for cropper.js -->
+                    <div id="cropperContainer">
+                        <img id="cropperImage" src="" alt="Image for cropping">
+                        <button type="button" id="cropImageButton" class="btn btn-primary">Crop & Upload</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Images Field -->
+            <div class="form-group">
+                <label for="id_gallery_images">Gallery Images</label>
+                <input type="file" name="gallery_images" id="id_gallery_images" multiple>
+                <div class="image-preview" id="galleryImagePreview">
+                    <!-- Existing gallery images preview -->
+                    {% for image in product.productgallery_set.all %}
+                        <div>
+                            <img src="{{ image.image.url }}" alt="Gallery Image" style="max-width: 100px; max-height: 100px; margin-right: 10px; border-radius: 5px; border: 1px solid #ccc;">
+                            <a href="{{ image.image.url }}" target="_blank">View</a>
+                            <button type="button" class="btn btn-danger btn-sm delete-image" data-image-id="{{ image.id }}">Delete</button>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- Offer Percentage Field -->
+            <div class="form-group">
+                <label for="id_offer_percentage">Offer Percentage</label>
+                {{ form.offer_percentage }}
+                {% if form.offer_percentage.errors %}
+                    <p class="error">{{ form.offer_percentage.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Is Available Field -->
+            <div class="form-group">
+                <label for="id_is_available">Is Available</label>
+                {{ form.is_available }}
+                {% if form.is_available.errors %}
+                    <p class="error">{{ form.is_available.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Is Deleted Field -->
+            <div class="form-group">
+                <label for="id_is_deleted">Is Deleted</label>
+                {{ form.is_deleted }}
+                {% if form.is_deleted.errors %}
+                    <p class="error">{{ form.is_deleted.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Is Featured Field -->
+            <div class="form-group">
+                <label for="id_is_featured">Is Featured</label>
+                {{ form.is_featured }}
+                {% if form.is_featured.errors %}
+                    <p class="error">{{ form.is_featured.errors }}</p>
+                {% endif %}
+            </div>
+
+            <!-- Submit and Cancel Buttons -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Update Product</button>
+                <a href="{% url 'productlist' %}" class="btn btn-secondary">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+      document.querySelectorAll('.delete-image').forEach(function(button) {
+        button.addEventListener('click', function() {
+            const imageId = this.getAttribute('data-image-id');
+            const url = '{% url "delete_gallery_image" product.id %}';
+
+            if (confirm('Are you sure you want to delete this image?')) {
+                fetch(`${url}?image_id=${imageId}`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Image deleted successfully.');
+                        location.reload();
+                    } else {
+                        alert('Failed to delete the image.');
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+    });
+    // Preview for main image
+    let cropper;
+    const cropperContainer = document.getElementById('cropperContainer');
+    const cropperImage = document.getElementById('cropperImage');
+    const mainImageInput = document.getElementById('id_images');
+
+    mainImageInput.addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                cropperContainer.style.display = 'block';
+                cropperImage.src = e.target.result;
+
+                if (cropper) {
+                    cropper.destroy();
+                }
+                cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1,
+                    viewMode: 1,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    document.getElementById('cropImageButton').addEventListener('click', function() {
+        if (cropper) {
+            const croppedCanvas = cropper.getCroppedCanvas();
+            croppedCanvas.toBlob(function(blob) {
+                const formData = new FormData();
+                formData.append('images', blob, 'cropped-image.jpg');
+                
+                fetch('{% url "editproduct" product.id %}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}',
+                    },
+                }).then(response => response.json())
+                  .then(data => {
+                      if (data.success) {
+                          alert('Image cropped and uploaded successfully.');
+                          location.reload();
+                      } else {
+                          alert('Failed to upload the cropped image.');
+                      }
+                  })
+                  .catch(error => console.error('Error:', error));
+            });
+        }
+    });
+
+    // Preview for gallery images
+    const galleryImagesInput = document.getElementById('id_gallery_images');
+    const galleryImagePreview = document.getElementById('galleryImagePreview');
+
+    galleryImagesInput.addEventListener('change', function(event) {
+        galleryImagePreview.innerHTML = ''; // Clear the previous previews
+        const files = event.target.files;
+        for (const file of files) {
+            if (file.type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const previewDiv = document.createElement('div');
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.alt = 'Gallery Image';
+                    img.style.maxWidth = '100px';
+                    img.style.maxHeight = '100px';
+                    img.style.marginRight = '10px';
+                    img.style.borderRadius = '5px';
+                    img.style.border = '1px solid #ccc';
+
+                    previewDiv.appendChild(img);
+                    galleryImagePreview.appendChild(previewDiv);
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+    });
+
+    // Auto-update slug based on product name
+    const productNameInput = document.getElementById('id_product_name');
+    const slugInput = document.getElementById('id_slug');
+
+    productNameInput.addEventListener('input', function() {
+        const slug = productNameInput.value
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, '-')
+            .replace(/^-+|-+$/g, '');
+        slugInput.value = slug;
+    });
+
+    // Ensure positive values for price and stock
+    const priceInput = document.getElementById('id_price');
+    const stockInput = document.getElementById('id_stock');
+
+    priceInput.addEventListener('input', function() {
+        if (parseFloat(priceInput.value) < 0) {
+            priceInput.value = 0;
+        }
+    });
+
+    stockInput.addEventListener('input', function() {
+        if (parseInt(stockInput.value) < 0) {
+            stockInput.value = 0;
+        }
+    });
+</script>
+{% endblock %}

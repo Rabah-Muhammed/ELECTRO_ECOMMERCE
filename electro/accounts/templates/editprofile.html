@@ -1,0 +1,257 @@
+{% extends 'my-account.html' %}
+
+{% block title %}Edit Profile{% endblock %}
+
+{% block content %}
+
+{% block extracss %}
+<style>
+    /* Container styling */
+    .myaccount-content {
+        background-color: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 30px;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    /* Heading styling */
+    .myaccount-content h3 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        color: #333;
+    }
+
+    /* Form container */
+    .account-details-form {
+        max-width: 900px;
+        margin: 0 auto;
+    }
+
+    /* Form row styling */
+    .form-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        margin-bottom: 20px;
+    }
+
+    .form-col {
+        flex: 1;
+        min-width: calc(50% - 10px);
+    }
+
+    /* Form input styling */
+    .single-input-item {
+        margin-bottom: 15px;
+    }
+
+    .single-input-item label {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+        color: #555;
+    }
+
+    .single-input-item input,
+    .single-input-item textarea,
+    .single-input-item select {
+        width: 100%;
+        padding: 12px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 6px;
+        box-sizing: border-box;
+    }
+
+    .single-input-item input[type="file"] {
+        padding: 0;
+    }
+
+    /* Error message styling */
+    .text-danger {
+        color: #e74c3c;
+        font-size: 14px;
+        margin-top: 5px;
+    }
+
+    /* Submit button styling */
+    .single-input-item .btn-primary {
+        background-color: #3498db;
+        color: #fff;
+        border: none;
+        padding: 12px 25px;
+        cursor: pointer;
+        border-radius: 6px;
+        font-size: 16px;
+    }
+
+    .single-input-item .btn-primary:hover {
+        background-color: #2980b9;
+    }
+
+    /* Current image link styling */
+    .single-input-item a {
+        color: #3498db;
+        text-decoration: none;
+        display: inline-block;
+        margin-top: 5px;
+    }
+
+    .single-input-item a:hover {
+        text-decoration: underline;
+    }
+</style>
+{% endblock %}
+
+<div class="myaccount-content">
+    <h3>Edit Profile</h3>
+    <div class="account-details-form">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <!-- Display success message if any -->
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert alert-success">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+            
+            <!-- UserForm fields -->
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="single-input-item">
+                        {{ user_form.first_name.label_tag }}
+                        {{ user_form.first_name }}
+                        {% if user_form.first_name.errors %}
+                            <div class="text-danger">
+                                {% for error in user_form.first_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="single-input-item">
+                        {{ user_form.last_name.label_tag }}
+                        {{ user_form.last_name }}
+                        {% if user_form.last_name.errors %}
+                            <div class="text-danger">
+                                {% for error in user_form.last_name.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <!-- UserProfileForm fields -->
+            <div class="single-input-item">
+                {{ profile_form.phone_number.label_tag }}
+                {{ profile_form.phone_number }}
+                {% if profile_form.phone_number.errors %}
+                    <div class="text-danger">
+                        {% for error in profile_form.phone_number.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="single-input-item">
+                {{ profile_form.address_line_1.label_tag }}
+                {{ profile_form.address_line_1 }}
+                {% if profile_form.address_line_1.errors %}
+                    <div class="text-danger">
+                        {% for error in profile_form.address_line_1.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="single-input-item">
+                {{ profile_form.address_line_2.label_tag }}
+                {{ profile_form.address_line_2 }}
+                {% if profile_form.address_line_2.errors %}
+                    <div class="text-danger">
+                        {% for error in profile_form.address_line_2.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="form-row">
+                <div class="form-col">
+                    <div class="single-input-item">
+                        {{ profile_form.city.label_tag }}
+                        {{ profile_form.city }}
+                        {% if profile_form.city.errors %}
+                            <div class="text-danger">
+                                {% for error in profile_form.city.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="form-col">
+                    <div class="single-input-item">
+                        {{ profile_form.state.label_tag }}
+                        {{ profile_form.state }}
+                        {% if profile_form.state.errors %}
+                            <div class="text-danger">
+                                {% for error in profile_form.state.errors %}
+                                    {{ error }}
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+
+            <div class="single-input-item">
+                {{ profile_form.country.label_tag }}
+                {{ profile_form.country }}
+                {% if profile_form.country.errors %}
+                    <div class="text-danger">
+                        {% for error in profile_form.country.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <div class="single-input-item">
+                {{ profile_form.profile_picture.label_tag }}
+                {% if profile_form.instance.profile_picture %}
+                    <br>
+                    Current Image:
+                    <a href="{{ profile_form.instance.profile_picture.url }}" target="_blank">{{ profile_form.instance.profile_picture.name }}</a>
+                    <br><br>
+                {% endif %}
+                {{ profile_form.profile_picture }}
+                {% if profile_form.profile_picture.errors %}
+                    <div class="text-danger">
+                        {% for error in profile_form.profile_picture.errors %}
+                            {{ error }}
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Submit button -->
+            <div class="single-input-item">
+                <button type="submit" class="btn-primary">Save Changes</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
