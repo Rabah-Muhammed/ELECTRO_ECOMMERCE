@@ -704,6 +704,7 @@ def payment_failed(request):
     return render(request, 'layouts/payment_failed.html', {'order': order})
 
 
+
 @login_required(login_url='login')
 def checkout_repay(request, order_id):
     order = get_object_or_404(Order, id=order_id, status='Payment Failed')
