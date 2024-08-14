@@ -36,7 +36,7 @@ openpyxl==3.1.5
 pandas==2.2.2
 pilkit==3.0
 pillow==10.3.0
-psycopg2==2.9.9
+psycopg2-binary==2.9.9
 pycparser==2.22
 pydyf==0.11.0
 PyJWT==2.8.0
